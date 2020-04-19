@@ -1,0 +1,22 @@
+---
+- name: "Configure apache server"
+  hosts: localhost
+  remote_user: ansible
+  become: yes
+
+  tasks:
+    - name: install httpd Apache
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Create content
+      copy:
+        content: "Welcome to apache"
+        dest: /var/www/html/index.html
+
+    - name: start and enable http server
+      service:
+        name: httpd
+        state: started
+        enabled: yes
